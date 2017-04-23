@@ -1,6 +1,5 @@
-class Startup {
-    public static main(): number {
-        console.log("Hello Hauke");
-        return 0;
+export default class HelloWorld {
+    public sayHello(name: string) {
+        return `Hello ${name}!`;
     }
 }

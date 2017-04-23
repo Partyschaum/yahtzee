@@ -5,9 +5,26 @@
   "license": "MIT",
   "scripts": {
     "lint": "tslint src/** -e src/**/*.js -e src/**/*.map",
-    "watch": "tsc -p . -w"
+    "watch": "tsc -p . -w",
+    "test": "yarn lint && jest --coverage",
+    "build": "tsc -p ."
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json"
+    ]
   },
   "devDependencies": {
+    "@types/jest": "^19.2.2",
+    "jest": "^19.0.2",
+    "ts-jest": "^19.0.10",
     "tslint": "^5.1.0",
     "typescript": "^2.2.2"
   }
