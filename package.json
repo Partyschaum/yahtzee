@@ -4,10 +4,12 @@
   "author": "Hauke Stange <hauke.stange@posteo.de>",
   "license": "MIT",
   "scripts": {
-    "lint": "tslint src/** -e src/**/*.js -e src/**/*.map",
+    "lint": "tslint src/**/*.ts",
     "watch": "tsc -p . -w",
     "test": "yarn lint && jest --coverage",
-    "build": "tsc -p ."
+    "build": "tsc -p .",
+    "precommit": "yarn test",
+    "prepush": "yarn test && yarn build"
   },
   "jest": {
     "transform": {
@@ -23,6 +25,7 @@
   },
   "devDependencies": {
     "@types/jest": "^19.2.2",
+    "husky": "^0.13.3",
     "jest": "^19.0.2",
     "ts-jest": "^19.0.10",
     "tslint": "^5.1.0",
