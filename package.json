@@ -1,0 +1,14 @@
+{
+  "name": "typescript-first-steps",
+  "version": "1.0.0",
+  "author": "Hauke Stange <hauke.stange@posteo.de>",
+  "license": "MIT",
+  "scripts": {
+    "lint": "tslint src/** -e src/**/*.js -e src/**/*.map",
+    "watch": "tsc -p . -w"
+  },
+  "devDependencies": {
+    "tslint": "^5.1.0",
+    "typescript": "^2.2.2"
+  }
+}
