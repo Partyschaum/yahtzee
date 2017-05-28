@@ -4,10 +4,10 @@ describe('DiceCup', () => {
   it('casts five numbers between 1 and 6', () => {
     const numberOfDices = 5;
     const cup = new DiceCup(numberOfDices);
-    const casts = cup.cast();
+    const cast = cup.cast();
 
-    expect(casts).toHaveLength(numberOfDices);
-    casts.forEach((pip) => {
+    expect(cast).toHaveLength(numberOfDices);
+    cast.forEach((pip) => {
       expect(pip).toBeGreaterThanOrEqual(1);
       expect(pip).toBeLessThanOrEqual(6);
     });
