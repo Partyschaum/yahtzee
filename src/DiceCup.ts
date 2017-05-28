@@ -7,9 +7,8 @@ export default class DiceCup {
 
   public cast(): Array<number> {
     const pips: Array<number> = [];
-
     for (let i = 0; i < this.numberOfDices; i++) {
-      pips.push(1);
+      pips.push(Math.floor(Math.random() * 6) + 1);
     }
     return pips;
   }
