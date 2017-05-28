@@ -4,7 +4,7 @@
   "author": "Hauke Stange <hauke.stange@posteo.de>",
   "license": "MIT",
   "scripts": {
-    "lint": "tslint src/**/*.ts",
+    "lint": "tslint --type-check -p . src/**/*.ts",
     "watch": "tsc -p . -w",
     "test": "yarn lint && jest --coverage",
     "build": "rimraf build && tsc -p .",
@@ -29,7 +29,7 @@
     "jest": "^19.0.2",
     "rimraf": "^2.6.1",
     "ts-jest": "^19.0.10",
-    "tslint": "^5.1.0",
+    "tslint": "^5.3.2",
     "typescript": "^2.3.3"
   }
 }
