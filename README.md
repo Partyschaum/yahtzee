@@ -1,13 +1,11 @@
-# typescript-playground
-A TypeScript Playground with Jest and Yarn
+# Yahtzee
 
-This is my playground to get started with [TypeScript](https://www.typescriptlang.org). This project uses [Jest](https://facebook.github.io/jest/)
-for *Painless ~~JavaScript~~ TypeScript Testing* and [Yarn](https://yarnpkg.com/en/docs/install) for contemporary package management.
+A Yahtzee implementation in TypeScript
 
 ## Setup
 
 ```
-$ > git clone git@github.com:Partyschaum/typescript-playground.git
+$ git clone git@github.com:Partyschaum/yahtzee.git
 
-$ > yarn install
+$ yarn install
 ```
