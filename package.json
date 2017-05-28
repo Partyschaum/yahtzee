@@ -1,5 +1,5 @@
 {
-  "name": "typescript-first-steps",
+  "name": "yahtzee",
   "version": "1.0.0",
   "author": "Hauke Stange <hauke.stange@posteo.de>",
   "license": "MIT",
@@ -7,7 +7,7 @@
     "lint": "tslint src/**/*.ts",
     "watch": "tsc -p . -w",
     "test": "yarn lint && jest --coverage",
-    "build": "tsc -p .",
+    "build": "rimraf build && tsc -p .",
     "precommit": "yarn test",
     "prepush": "yarn test && yarn build"
   },
@@ -27,8 +27,9 @@
     "@types/jest": "^19.2.2",
     "husky": "^0.13.3",
     "jest": "^19.0.2",
+    "rimraf": "^2.6.1",
     "ts-jest": "^19.0.10",
     "tslint": "^5.1.0",
-    "typescript": "^2.2.2"
+    "typescript": "^2.3.3"
   }
 }
