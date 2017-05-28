@@ -1,7 +1,19 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "forceConsistentCasingInFileNames": true,
     "module": "commonjs",
-    "sourceMap": true
-  }
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "outDir": "build/dist",
+    "sourceMap": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "target": "es5"
+  },
+  "exclude": [
+    "node_modules",
+    "build"
+  ]
 }
