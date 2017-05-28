@@ -2,7 +2,7 @@
   "compilerOptions": {
     "forceConsistentCasingInFileNames": true,
     "lib": [
-      "es6"
+      "esnext"
     ],
     "module": "commonjs",
     "noImplicitAny": true,
