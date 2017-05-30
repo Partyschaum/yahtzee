@@ -1,4 +1,4 @@
-import aces from '../aces';
+import { aces } from '../index';
 
 describe('Aces', () => {
   it('returns sum of dice with the number 1', () => {

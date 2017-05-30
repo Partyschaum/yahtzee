@@ -1,4 +1,4 @@
-import smallStraight from '../smallStraight';
+import { smallStraight } from '../index';
 
 describe('Small Straight', () => {
   describe('was cast', () => {

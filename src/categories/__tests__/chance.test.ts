@@ -1,4 +1,4 @@
-import chance from '../chance';
+import { chance } from '../index';
 
 describe('Chance', () => {
   it('returns sum of all dice', () => {

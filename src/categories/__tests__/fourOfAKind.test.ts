@@ -1,4 +1,4 @@
-import fourOfAKind from '../fourOfAKind';
+import { fourOfAKind } from '../index';
 
 describe('Four Of A Kind', () => {
   describe('was cast', () => {

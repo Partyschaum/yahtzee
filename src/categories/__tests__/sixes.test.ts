@@ -1,4 +1,4 @@
-import sixes from '../sixes';
+import { sixes } from '../index';
 
 describe('Sixes', () => {
   it('returns sum of dice with the number 6', () => {

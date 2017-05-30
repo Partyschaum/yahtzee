@@ -1,4 +1,4 @@
-import largeStraight from '../largeStraight';
+import { largeStraight } from '../index';
 
 describe('Large Straight', () => {
   describe('was cast', () => {

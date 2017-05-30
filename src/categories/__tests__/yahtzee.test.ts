@@ -1,4 +1,4 @@
-import yahtzee from '../yahtzee';
+import { yahtzee } from '../index';
 
 describe('Yahtzee', () => {
   describe('was cast', () => {

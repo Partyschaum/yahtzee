@@ -1,4 +1,4 @@
-import fullHouse from '../fullHouse';
+import { fullHouse } from '../index';
 
 describe('Full House', () => {
   describe('was cast', () => {

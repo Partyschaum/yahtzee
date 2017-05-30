@@ -1,4 +1,4 @@
-import twos from '../twos';
+import { twos } from '../index';
 
 describe('Twos', () => {
   it('returns sum of dice with the number 2', () => {
