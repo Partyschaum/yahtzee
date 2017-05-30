@@ -1,4 +1,7 @@
-export default function (cast: Array<number>): number {
+import Score from '../Score';
+import { YAHTZEE } from './index';
+
+export default function (cast: Array<number>): Score | null {
   const pipCounter: Array<number> = Array<number>(5).fill(0);
 
   cast.forEach((val: number): void => {
@@ -13,8 +16,8 @@ export default function (cast: Array<number>): number {
   });
 
   if (hasYahtzee) {
-    return 50;
+    return new Score(YAHTZEE, 50);
   }
 
-  return 0;
+  return null;
 }

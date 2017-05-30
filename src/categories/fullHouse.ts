@@ -1,4 +1,7 @@
-export default function (cast: Array<number>): number {
+import Score from '../Score';
+import { FULL_HOUSE } from './index';
+
+export default function (cast: Array<number>): Score | null {
   const pipCounter: Array<number> = Array<number>(5).fill(0);
 
   cast.forEach((val: number): void => {
@@ -17,8 +20,8 @@ export default function (cast: Array<number>): number {
   });
 
   if (hasTwoOfAKind && hasThreeOfAKind) {
-    return 25;
+    return new Score(FULL_HOUSE, 25);
   }
 
-  return 0;
+  return null;
 }

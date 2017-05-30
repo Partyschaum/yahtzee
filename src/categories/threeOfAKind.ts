@@ -1,4 +1,7 @@
-export default function (cast: Array<number>): number {
+import Score from '../Score';
+import { THREE_OF_A_KIND } from './index';
+
+export default function (cast: Array<number>): Score | null {
   const pipCounter: Array<number> = Array<number>(5).fill(0);
 
   cast.forEach((val: number): void => {
@@ -13,12 +16,12 @@ export default function (cast: Array<number>): number {
   });
 
   if (!hasThreeOfAKind) {
-    return 0;
+    return null;
   }
 
   const sum = (acc: number, val: number): number => {
     return acc + val;
   };
 
-  return cast.reduce(sum, 0);
+  return new Score(THREE_OF_A_KIND, cast.reduce(sum, 0));
 }

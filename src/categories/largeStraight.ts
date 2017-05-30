@@ -1,4 +1,7 @@
-export default function (cast: Array<number>): number {
+import Score from '../Score';
+import { LARGE_STRAIGHT } from './index';
+
+export default function (cast: Array<number>): Score | null {
   let ace = cast.includes(1);
   let two = cast.includes(2);
   let three = cast.includes(3);
@@ -7,8 +10,8 @@ export default function (cast: Array<number>): number {
   let six = cast.includes(6);
 
   if ((ace && two && three && four && five) || (two && three && four && five && six)) {
-    return 40;
+    return new Score(LARGE_STRAIGHT, 40);
   }
 
-  return 0;
+  return null;
 }
