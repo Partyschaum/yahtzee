@@ -3,7 +3,10 @@ import { largeStraight } from '../index';
 describe('Large Straight', () => {
   describe('was cast', () => {
     it('returns 40', () => {
-      const cast = [2, 3, 4, 5, 6];
+      let cast = [2, 3, 4, 5, 6];
+      expect(largeStraight(cast)).toBe(40);
+
+      cast = [1, 2, 3, 4, 5];
       expect(largeStraight(cast)).toBe(40);
     });
   });
