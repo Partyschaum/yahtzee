@@ -1,4 +1,4 @@
-import Score, { CategoryAlreadyUsedError } from './Score';
+import Score from './Score';
 import { ACES, TWOS, THREES, FOURS, FIVES, SIXES, Category } from './categories';
 
 export default class Scorecard {
@@ -35,5 +35,12 @@ export default class Scorecard {
     });
 
     return points >= Scorecard.MIN_UPPER_SECTION_SCORE_NEEDED_FOR_BONUS;
+  }
+}
+
+export class CategoryAlreadyUsedError extends Error {
+  constructor() {
+    super();
+    Object.setPrototypeOf(this, CategoryAlreadyUsedError.prototype);
   }
 }

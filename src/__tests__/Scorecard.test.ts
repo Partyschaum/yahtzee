@@ -1,5 +1,5 @@
-import Scorecard from '../Scorecard';
-import Score, { CategoryAlreadyUsedError } from '../Score';
+import Scorecard, { CategoryAlreadyUsedError } from '../Scorecard';
+import Score from '../Score';
 import { ACES, TWOS, THREES, FOURS, FIVES, SIXES, THREE_OF_A_KIND } from '../categories';
 
 describe('Scorecard', () => {
