@@ -79,15 +79,35 @@ describe('Scorecard', () => {
       expect(scorecard.score).toBe(30);
     });
 
-    it('adds bonus for uppser section', () => {
-      scorecard.add(new Score(ACES, 3));
-      scorecard.add(new Score(TWOS, 6));
-      scorecard.add(new Score(THREES, 9));
-      scorecard.add(new Score(FOURS, 12));
-      scorecard.add(new Score(FIVES, 15));
-      scorecard.add(new Score(SIXES, 18));
-      expect(scorecard.score).toBe(Scorecard.MIN_UPPER_SECTION_SCORE_NEEDED_FOR_BONUS
-        + Scorecard.UPPER_SECTION_BONUS);
+    describe('scorecard is not full', () => {
+      it('adds no bonus for uppser section', () => {
+        scorecard.add(new Score(ACES, 3));
+        scorecard.add(new Score(TWOS, 6));
+        scorecard.add(new Score(THREES, 9));
+        scorecard.add(new Score(FOURS, 12));
+        scorecard.add(new Score(FIVES, 15));
+        scorecard.add(new Score(SIXES, 18));
+        expect(scorecard.score).toBe(63);
+      });
+    });
+
+    describe('scorecard is full', () => {
+      it('add bonus only if scorecard is full', () => {
+        scorecard.add(new Score(ACES, 3));
+        scorecard.add(new Score(TWOS, 6));
+        scorecard.add(new Score(THREES, 9));
+        scorecard.add(new Score(FOURS, 12));
+        scorecard.add(new Score(FIVES, 15));
+        scorecard.add(new Score(SIXES, 18));
+        scorecard.add(new Score(THREE_OF_A_KIND, 10));
+        scorecard.add(new Score(FOUR_OF_A_KIND, 10));
+        scorecard.add(new Score(FULL_HOUSE, 10));
+        scorecard.add(new Score(SMALL_STRAIGHT, 10));
+        scorecard.add(new Score(LARGE_STRAIGHT, 10));
+        scorecard.add(new Score(YAHTZEE, 10));
+        scorecard.add(new Score(CHANCE, 10));
+        expect(scorecard.score).toBe(63 + 70 + Scorecard.UPPER_SECTION_BONUS);
+      });
     });
   });
 });

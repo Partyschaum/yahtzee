@@ -49,7 +49,9 @@ export default class Scorecard {
       points += score.points;
     });
 
-    return (this.bonus) ? points + Scorecard.UPPER_SECTION_BONUS : points;
+    const applyBonus = this._categories.length === 13 && this.bonus;
+
+    return (applyBonus) ? points + Scorecard.UPPER_SECTION_BONUS : points;
   }
 }
 
