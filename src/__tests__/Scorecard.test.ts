@@ -1,6 +1,10 @@
-import Scorecard, { CategoryAlreadyUsedError } from '../Scorecard';
+import Scorecard, { CategoryAlreadyUsedError, FullScorecardError } from '../Scorecard';
 import Score from '../Score';
-import { ACES, TWOS, THREES, FOURS, FIVES, SIXES, THREE_OF_A_KIND } from '../categories';
+import {
+  ACES, TWOS, THREES, FOURS, FIVES, SIXES,
+  THREE_OF_A_KIND, FOUR_OF_A_KIND, FULL_HOUSE,
+  SMALL_STRAIGHT, LARGE_STRAIGHT, CHANCE, YAHTZEE
+} from '../categories';
 
 describe('Scorecard', () => {
   let scorecard: Scorecard;
@@ -21,6 +25,24 @@ describe('Scorecard', () => {
       scorecard.add(score);
       expect(() => scorecard.add(score)).toThrowError(CategoryAlreadyUsedError);
 
+    });
+
+    it('throws error if all categories are used', () => {
+      scorecard.add(new Score(ACES, 3));
+      scorecard.add(new Score(TWOS, 6));
+      scorecard.add(new Score(THREES, 9));
+      scorecard.add(new Score(FOURS, 12));
+      scorecard.add(new Score(FIVES, 15));
+      scorecard.add(new Score(SIXES, 18));
+      scorecard.add(new Score(THREE_OF_A_KIND, 18));
+      scorecard.add(new Score(FOUR_OF_A_KIND, 18));
+      scorecard.add(new Score(FULL_HOUSE, 18));
+      scorecard.add(new Score(SMALL_STRAIGHT, 18));
+      scorecard.add(new Score(LARGE_STRAIGHT, 18));
+      scorecard.add(new Score(YAHTZEE, 18));
+      scorecard.add(new Score(CHANCE, 18));
+
+      expect(() => scorecard.add(new Score(ACES, 3))).toThrowError(FullScorecardError);
     });
   });
 
