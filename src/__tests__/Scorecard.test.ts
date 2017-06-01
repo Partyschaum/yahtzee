@@ -69,4 +69,25 @@ describe('Scorecard', () => {
       expect(scorecard.bonus).toBe(false);
     });
   });
+
+  describe('score', () => {
+    it('returns sum of all points', () => {
+      scorecard.add(new Score(ACES, 3));
+      scorecard.add(new Score(TWOS, 6));
+      scorecard.add(new Score(THREES, 9));
+      scorecard.add(new Score(FOURS, 12));
+      expect(scorecard.score).toBe(30);
+    });
+
+    it('adds bonus for uppser section', () => {
+      scorecard.add(new Score(ACES, 3));
+      scorecard.add(new Score(TWOS, 6));
+      scorecard.add(new Score(THREES, 9));
+      scorecard.add(new Score(FOURS, 12));
+      scorecard.add(new Score(FIVES, 15));
+      scorecard.add(new Score(SIXES, 18));
+      expect(scorecard.score).toBe(Scorecard.MIN_UPPER_SECTION_SCORE_NEEDED_FOR_BONUS
+        + Scorecard.UPPER_SECTION_BONUS);
+    });
+  });
 });

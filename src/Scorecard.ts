@@ -3,6 +3,7 @@ import { ACES, TWOS, THREES, FOURS, FIVES, SIXES, Category } from './categories'
 
 export default class Scorecard {
   public static MIN_UPPER_SECTION_SCORE_NEEDED_FOR_BONUS = 63;
+  public static UPPER_SECTION_BONUS = 35;
   public static CATEGORIES = 13;
 
   private _categories: Array<Score> = [];
@@ -39,6 +40,16 @@ export default class Scorecard {
     });
 
     return points >= Scorecard.MIN_UPPER_SECTION_SCORE_NEEDED_FOR_BONUS;
+  }
+
+  get score(): number {
+    let points = 0;
+
+    this._categories.forEach((score) => {
+      points += score.points;
+    });
+
+    return (this.bonus) ? points + Scorecard.UPPER_SECTION_BONUS : points;
   }
 }
 
