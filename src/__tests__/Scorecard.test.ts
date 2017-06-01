@@ -19,4 +19,12 @@ describe('Scorecard', () => {
 
     });
   });
+
+  describe('cross out score', () => {
+    it('crosses out a category', () => {
+      const scorecard = new Scorecard();
+      scorecard.cross(THREE_OF_A_KIND);
+      expect(scorecard.categories[0].points).toBe(0);
+    });
+  });
 });
