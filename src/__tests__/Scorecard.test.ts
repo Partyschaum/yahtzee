@@ -44,6 +44,21 @@ describe('Scorecard', () => {
 
       expect(() => scorecard.add(new Score(ACES, 3))).toThrowError(FullScorecardError);
     });
+
+    it('returns unused categories', () => {
+      scorecard.add(new Score(ACES, 3));
+      scorecard.add(new Score(THREE_OF_A_KIND, 18));
+      scorecard.add(new Score(CHANCE, 18));
+
+      [TWOS, THREES, FOURS, FIVES, SIXES, FOUR_OF_A_KIND,
+        FULL_HOUSE, SMALL_STRAIGHT, LARGE_STRAIGHT, YAHTZEE].forEach((category) => {
+          expect(scorecard.unusedCategories).toContain(category);
+        });
+
+      [ACES, THREE_OF_A_KIND, CHANCE].forEach((category) => {
+        expect(scorecard.unusedCategories).not.toContain(category);
+      });
+    });
   });
 
   describe('cross out score', () => {

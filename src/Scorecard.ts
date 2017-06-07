@@ -6,12 +6,12 @@ import {
 
 export default class Scorecard {
   public static CATEGORIES = 13;
-  public static LOWER_SECTION = [
+  public static LOWER_SECTION: Array<Category> = [
     THREE_OF_A_KIND, FOUR_OF_A_KIND, FULL_HOUSE,
     SMALL_STRAIGHT, LARGE_STRAIGHT, YAHTZEE, CHANCE
   ];
   public static MIN_UPPER_SECTION_SCORE_NEEDED_FOR_BONUS = 63;
-  public static UPPER_SECTION = [ACES, TWOS, THREES, FOURS, FIVES, SIXES];
+  public static UPPER_SECTION: Array<Category> = [ACES, TWOS, THREES, FOURS, FIVES, SIXES];
   public static UPPER_SECTION_BONUS = 35;
 
   private _categories: Array<Score> = [];
@@ -75,6 +75,13 @@ export default class Scorecard {
 
   get pointsNeededForBonus(): number {
     return Math.max(Scorecard.MIN_UPPER_SECTION_SCORE_NEEDED_FOR_BONUS - this.upperSection, 0);
+  }
+
+  get unusedCategories(): Array<Category> {
+    const usedCategories = this.categories.map((score) => score.category);
+
+    return Scorecard.UPPER_SECTION.concat(Scorecard.LOWER_SECTION)
+      .filter(category => !usedCategories.includes(category));
   }
 }
 
