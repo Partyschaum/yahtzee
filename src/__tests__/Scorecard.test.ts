@@ -68,6 +68,18 @@ describe('Scorecard', () => {
       scorecard.add(new Score(ACES, 3));
       expect(scorecard.bonus).toBe(false);
     });
+
+    it('returns point gap to bounus', () => {
+      expect(scorecard.pointsNeededForBonus).toBe(63);
+      scorecard.add(new Score(ACES, 3));
+      scorecard.add(new Score(TWOS, 6));
+      scorecard.add(new Score(THREES, 9));
+      expect(scorecard.pointsNeededForBonus).toBe(45);
+      scorecard.add(new Score(FOURS, 12));
+      scorecard.add(new Score(FIVES, 15));
+      scorecard.add(new Score(SIXES, 18));
+      expect(scorecard.pointsNeededForBonus).toBe(0);
+    });
   });
 
   describe('score', () => {

@@ -2,9 +2,10 @@ import Score from './Score';
 import { ACES, TWOS, THREES, FOURS, FIVES, SIXES, Category } from './categories';
 
 export default class Scorecard {
-  public static MIN_UPPER_SECTION_SCORE_NEEDED_FOR_BONUS = 63;
-  public static UPPER_SECTION_BONUS = 35;
   public static CATEGORIES = 13;
+  public static MIN_UPPER_SECTION_SCORE_NEEDED_FOR_BONUS = 63;
+  public static UPPER_SECTION = [ACES, TWOS, THREES, FOURS, FIVES, SIXES];
+  public static UPPER_SECTION_BONUS = 35;
 
   private _categories: Array<Score> = [];
 
@@ -25,21 +26,22 @@ export default class Scorecard {
     this.add(new Score(category, 0));
   }
 
+  private upperSection(): number {
+    let points = 0;
+    this._categories
+      .filter((score) => Scorecard.UPPER_SECTION.includes(score.category))
+      .forEach((score) => {
+        points += score.points;
+      });
+    return points;
+  }
+
   get categories(): Array<Score> {
     return this._categories;
   }
 
   get bonus(): boolean {
-    let points = 0;
-
-    this._categories.filter((score) => {
-      return score.category === ACES || score.category === TWOS || score.category === THREES
-        || score.category === FOURS || score.category === FIVES || score.category === SIXES;
-    }).forEach((score) => {
-      points += score.points;
-    });
-
-    return points >= Scorecard.MIN_UPPER_SECTION_SCORE_NEEDED_FOR_BONUS;
+    return this.upperSection() >= Scorecard.MIN_UPPER_SECTION_SCORE_NEEDED_FOR_BONUS;
   }
 
   get score(): number {
@@ -52,6 +54,10 @@ export default class Scorecard {
     const applyBonus = this._categories.length === 13 && this.bonus;
 
     return (applyBonus) ? points + Scorecard.UPPER_SECTION_BONUS : points;
+  }
+
+  get pointsNeededForBonus(): number {
+    return Scorecard.MIN_UPPER_SECTION_SCORE_NEEDED_FOR_BONUS - this.upperSection();
   }
 }
 
