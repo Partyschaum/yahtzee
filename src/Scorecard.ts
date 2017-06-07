@@ -57,7 +57,7 @@ export default class Scorecard {
   }
 
   get pointsNeededForBonus(): number {
-    return Scorecard.MIN_UPPER_SECTION_SCORE_NEEDED_FOR_BONUS - this.upperSection();
+    return Math.max(Scorecard.MIN_UPPER_SECTION_SCORE_NEEDED_FOR_BONUS - this.upperSection(), 0);
   }
 }
 

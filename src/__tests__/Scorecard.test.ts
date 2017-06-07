@@ -80,6 +80,14 @@ describe('Scorecard', () => {
       scorecard.add(new Score(SIXES, 18));
       expect(scorecard.pointsNeededForBonus).toBe(0);
     });
+
+    it('returns no negative point gap to bounus', () => {
+      expect(scorecard.pointsNeededForBonus).toBe(63);
+      scorecard.add(new Score(FOURS, 12));
+      scorecard.add(new Score(FIVES, 25));
+      scorecard.add(new Score(SIXES, 30));
+      expect(scorecard.pointsNeededForBonus).toBe(0);
+    });
   });
 
   describe('score', () => {
