@@ -1,8 +1,15 @@
 import Score from './Score';
-import { ACES, TWOS, THREES, FOURS, FIVES, SIXES, Category } from './categories';
+import {
+  ACES, TWOS, THREES, FOURS, FIVES, SIXES, THREE_OF_A_KIND, FOUR_OF_A_KIND,
+  FULL_HOUSE, SMALL_STRAIGHT, LARGE_STRAIGHT, YAHTZEE, CHANCE, Category
+} from './categories';
 
 export default class Scorecard {
   public static CATEGORIES = 13;
+  public static LOWER_SECTION = [
+    THREE_OF_A_KIND, FOUR_OF_A_KIND, FULL_HOUSE,
+    SMALL_STRAIGHT, LARGE_STRAIGHT, YAHTZEE, CHANCE
+  ];
   public static MIN_UPPER_SECTION_SCORE_NEEDED_FOR_BONUS = 63;
   public static UPPER_SECTION = [ACES, TWOS, THREES, FOURS, FIVES, SIXES];
   public static UPPER_SECTION_BONUS = 35;
@@ -26,10 +33,20 @@ export default class Scorecard {
     this.add(new Score(category, 0));
   }
 
-  private upperSection(): number {
+  get upperSection(): number {
     let points = 0;
     this._categories
       .filter((score) => Scorecard.UPPER_SECTION.includes(score.category))
+      .forEach((score) => {
+        points += score.points;
+      });
+    return points;
+  }
+
+  get lowerSection(): number {
+    let points = 0;
+    this._categories
+      .filter((score) => Scorecard.LOWER_SECTION.includes(score.category))
       .forEach((score) => {
         points += score.points;
       });
@@ -41,7 +58,7 @@ export default class Scorecard {
   }
 
   get bonus(): boolean {
-    return this.upperSection() >= Scorecard.MIN_UPPER_SECTION_SCORE_NEEDED_FOR_BONUS;
+    return this.upperSection >= Scorecard.MIN_UPPER_SECTION_SCORE_NEEDED_FOR_BONUS;
   }
 
   get score(): number {
@@ -57,7 +74,7 @@ export default class Scorecard {
   }
 
   get pointsNeededForBonus(): number {
-    return Math.max(Scorecard.MIN_UPPER_SECTION_SCORE_NEEDED_FOR_BONUS - this.upperSection(), 0);
+    return Math.max(Scorecard.MIN_UPPER_SECTION_SCORE_NEEDED_FOR_BONUS - this.upperSection, 0);
   }
 }
 

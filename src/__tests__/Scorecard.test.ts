@@ -99,6 +99,23 @@ describe('Scorecard', () => {
       expect(scorecard.score).toBe(30);
     });
 
+    it('returns sum of upper section', () => {
+      scorecard.add(new Score(ACES, 3));
+      scorecard.add(new Score(TWOS, 6));
+      scorecard.add(new Score(THREES, 9));
+      scorecard.add(new Score(FOURS, 12));
+      scorecard.add(new Score(THREE_OF_A_KIND, 10));
+      expect(scorecard.upperSection).toBe(30);
+    });
+
+    it('returns sum of section', () => {
+      scorecard.add(new Score(ACES, 3));
+      scorecard.add(new Score(THREE_OF_A_KIND, 10));
+      scorecard.add(new Score(FOUR_OF_A_KIND, 10));
+      scorecard.add(new Score(FULL_HOUSE, 10));
+      expect(scorecard.lowerSection).toBe(30);
+    });
+
     describe('scorecard is not full', () => {
       it('adds no bonus for uppser section', () => {
         scorecard.add(new Score(ACES, 3));
