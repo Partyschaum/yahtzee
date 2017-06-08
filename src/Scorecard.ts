@@ -80,8 +80,10 @@ export default class Scorecard {
   get unusedCategories(): Array<Category> {
     const usedCategories = this.categories.map((score) => score.category);
 
-    return Scorecard.UPPER_SECTION.concat(Scorecard.LOWER_SECTION)
-      .filter(category => !usedCategories.includes(category));
+    return [
+      ...Scorecard.UPPER_SECTION,
+      ...Scorecard.LOWER_SECTION,
+    ].filter(category => !usedCategories.includes(category));
   }
 }
 
