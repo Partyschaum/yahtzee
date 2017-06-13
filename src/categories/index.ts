@@ -15,43 +15,43 @@ export { default as chance } from './chance';
 export { default as yahtzee } from './yahtzee';
 
 export const ACES = 'ACES';
-export type ACES = typeof ACES;
+export type ACES = 'ACES';
 
 export const TWOS = 'TWOS';
-export type TWOS = typeof TWOS;
+export type TWOS = 'TWOS';
 
 export const THREES = 'THREES';
-export type THREES = typeof THREES;
+export type THREES = 'THREES';
 
 export const FOURS = 'FOURS';
-export type FOURS = typeof FOURS;
+export type FOURS = 'FOURS';
 
 export const FIVES = 'FIVES';
-export type FIVES = typeof FIVES;
+export type FIVES = 'FIVES';
 
 export const SIXES = 'SIXES';
-export type SIXES = typeof SIXES;
+export type SIXES = 'SIXES';
 
 export const THREE_OF_A_KIND = 'THREE_OF_A_KIND';
-export type THREE_OF_A_KIND = typeof THREE_OF_A_KIND;
+export type THREE_OF_A_KIND = 'THREE_OF_A_KIND';
 
 export const FOUR_OF_A_KIND = 'FOUR_OF_A_KIND';
-export type FOUR_OF_A_KIND = typeof FOUR_OF_A_KIND;
+export type FOUR_OF_A_KIND = 'FOUR_OF_A_KIND';
 
 export const FULL_HOUSE = 'FULL_HOUSE';
-export type FULL_HOUSE = typeof FULL_HOUSE;
+export type FULL_HOUSE = 'FULL_HOUSE';
 
 export const SMALL_STRAIGHT = 'SMALL_STRAIGHT';
-export type SMALL_STRAIGHT = typeof SMALL_STRAIGHT;
+export type SMALL_STRAIGHT = 'SMALL_STRAIGHT';
 
 export const LARGE_STRAIGHT = 'LARGE_STRAIGHT';
-export type LARGE_STRAIGHT = typeof LARGE_STRAIGHT;
+export type LARGE_STRAIGHT = 'LARGE_STRAIGHT';
 
 export const CHANCE = 'CHANCE';
-export type CHANCE = typeof CHANCE;
+export type CHANCE = 'CHANCE';
 
 export const YAHTZEE = 'YAHTZEE';
-export type YAHTZEE = typeof YAHTZEE;
+export type YAHTZEE = 'YAHTZEE';
 
 export type Category = ACES | TWOS | THREES | FOURS | FIVES | SIXES |
   THREE_OF_A_KIND | FOUR_OF_A_KIND | FULL_HOUSE | SMALL_STRAIGHT |
