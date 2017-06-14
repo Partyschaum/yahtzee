@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "@types/jest": "^19.2.3",
+    "@types/node": "^7.0.31",
     "husky": "^0.13.3",
     "jest": "^20.0.4",
     "rimraf": "^2.6.1",
