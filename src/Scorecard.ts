@@ -4,7 +4,7 @@ import {
   FULL_HOUSE, SMALL_STRAIGHT, LARGE_STRAIGHT, YAHTZEE, CHANCE, Category
 } from './categories';
 
-export default class Scorecard {
+class Scorecard {
   public static CATEGORIES = 13;
   public static LOWER_SECTION: Array<Category> = [
     THREE_OF_A_KIND, FOUR_OF_A_KIND, FULL_HOUSE,
@@ -18,11 +18,11 @@ export default class Scorecard {
 
   public add(newScore: Score) {
     if (this._categories.length === Scorecard.CATEGORIES) {
-      throw new FullScorecardError();
+      throw new Scorecard.FullScorecardError();
     }
     this._categories.forEach((score) => {
       if (score.category === newScore.category) {
-        throw new CategoryAlreadyUsedError();
+        throw new Scorecard.CategoryAlreadyUsedError();
       }
     });
 
@@ -87,16 +87,22 @@ export default class Scorecard {
   }
 }
 
-export class CategoryAlreadyUsedError extends Error {
-  constructor() {
-    super();
-    Object.setPrototypeOf(this, CategoryAlreadyUsedError.prototype);
+namespace Scorecard {
+
+  export class CategoryAlreadyUsedError extends Error {
+    constructor() {
+      super();
+      Object.setPrototypeOf(this, CategoryAlreadyUsedError.prototype);
+    }
   }
+
+  export class FullScorecardError extends Error {
+    constructor() {
+      super();
+      Object.setPrototypeOf(this, FullScorecardError.prototype);
+    }
+  }
+
 }
 
-export class FullScorecardError extends Error {
-  constructor() {
-    super();
-    Object.setPrototypeOf(this, FullScorecardError.prototype);
-  }
-}
+export default Scorecard;

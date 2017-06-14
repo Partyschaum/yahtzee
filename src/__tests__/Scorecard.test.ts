@@ -1,4 +1,4 @@
-import Scorecard, { CategoryAlreadyUsedError, FullScorecardError } from '../Scorecard';
+import Scorecard from '../Scorecard';
 import Score from '../Score';
 import {
   ACES, TWOS, THREES, FOURS, FIVES, SIXES,
@@ -23,7 +23,7 @@ describe('Scorecard', () => {
     it('throws error for already used category', () => {
       const score = new Score(THREE_OF_A_KIND, 10);
       scorecard.add(score);
-      expect(() => scorecard.add(score)).toThrowError(CategoryAlreadyUsedError);
+      expect(() => scorecard.add(score)).toThrowError(Scorecard.CategoryAlreadyUsedError);
 
     });
 
@@ -42,7 +42,7 @@ describe('Scorecard', () => {
       scorecard.add(new Score(YAHTZEE, 18));
       scorecard.add(new Score(CHANCE, 18));
 
-      expect(() => scorecard.add(new Score(ACES, 3))).toThrowError(FullScorecardError);
+      expect(() => scorecard.add(new Score(ACES, 3))).toThrowError(Scorecard.FullScorecardError);
     });
 
     it('returns unused categories', () => {
