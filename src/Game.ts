@@ -1,13 +1,14 @@
+import DiceCup from './DiceCup';
 import Player from './Player';
 import Score from './Score';
-import { ACES, TWOS, THREES } from './categories';
+import ScoreAnalyzer from './ScoreAnalyzer';
 
 class Game {
   private _players: Player[];
   private _running = false;
   private _currentPlayer: Player;
 
-  public constructor() {
+  public constructor(private diceCup: DiceCup, private scoreAnalyzer: ScoreAnalyzer) {
     this._players = [];
   }
 
@@ -37,13 +38,13 @@ class Game {
     if (!this.running) {
       throw new Game.GameNotRunningError;
     }
+
+    const dice = this.diceCup.cast(5);
+    const scores = this.scoreAnalyzer.scores(dice);
+
     return {
-      dice: [1, 2, 3],
-      scores: [
-        new Score(ACES, 1),
-        new Score(TWOS, 2),
-        new Score(THREES, 3),
-      ]
+      dice: dice,
+      scores: scores,
     };
   }
 

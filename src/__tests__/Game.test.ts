@@ -1,12 +1,37 @@
+import DiceCup from '../DiceCup';
 import Game from '../Game';
 import Score from '../Score';
-import { ACES, TWOS, THREES } from '../categories';
+import ScoreAnalyzer from '../ScoreAnalyzer';
+
+import {
+  aces, twos, threes, fours, fives, sixes,
+  threeOfAKind, fourOfAKind, fullHouse,
+  smallStraight, largeStraight, chance, yahtzee
+} from '../categories';
+
+import {
+  ACES, TWOS, THREES, FOURS, FIVES,
+  SMALL_STRAIGHT, LARGE_STRAIGHT, CHANCE
+} from '../categories';
 
 describe('Game', () => {
   let game: Game;
+  let returnedDice: number[];
 
   beforeEach(() => {
-    game = new Game();
+    const DiceCupMock = jest.fn<DiceCup>(() => ({
+      cast: (numberOfDice: number) => {
+        return returnedDice;
+      }
+    }));
+
+    const scoreanalyzer = new ScoreAnalyzer([
+      aces, twos, threes, fours, fives, sixes,
+      threeOfAKind, fourOfAKind, fullHouse,
+      smallStraight, largeStraight, chance, yahtzee
+    ]);
+
+    game = new Game(new DiceCupMock(), scoreanalyzer);
   });
 
   describe('game management', () => {
@@ -72,12 +97,20 @@ describe('Game', () => {
       it('it returns possible scores', () => {
         game.player('Karsten');
         game.start();
+
+        returnedDice = [1, 2, 3, 4, 5];
+
         expect(game.cast()).toEqual({
-          dice: [1, 2, 3],
+          dice: [1, 2, 3, 4, 5],
           scores: [
             new Score(ACES, 1),
             new Score(TWOS, 2),
             new Score(THREES, 3),
+            new Score(FOURS, 4),
+            new Score(FIVES, 5),
+            new Score(SMALL_STRAIGHT, 30),
+            new Score(LARGE_STRAIGHT, 40),
+            new Score(CHANCE, 15),
           ]
         });
       });
