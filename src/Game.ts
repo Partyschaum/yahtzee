@@ -34,16 +34,21 @@ class Game {
 
   }
 
-  public cast(): Game.Result {
+  public cast(dice: number[] = []): Game.Result {
     if (!this.running) {
       throw new Game.GameNotRunningError;
     }
 
-    const dice = this.diceCup.cast(5);
-    const scores = this.scoreAnalyzer.scores(dice);
+    let numberOfDice = dice.length;
+    if (numberOfDice === 0) {
+      numberOfDice = 5;
+    }
+
+    const diceCast = this.diceCup.cast(numberOfDice);
+    const scores = this.scoreAnalyzer.scores(diceCast);
 
     return {
-      dice: dice,
+      dice: diceCast,
       scores: scores,
     };
   }

@@ -10,20 +10,21 @@ import {
 } from '../categories';
 
 import {
-  ACES, TWOS, THREES, FOURS, FIVES,
+  ACES, TWOS, THREES, FOURS, FIVES, THREE_OF_A_KIND,
   SMALL_STRAIGHT, LARGE_STRAIGHT, CHANCE
 } from '../categories';
 
 describe('Game', () => {
+  let diceCup: DiceCup;
   let game: Game;
   let returnedDice: number[];
 
   beforeEach(() => {
     const DiceCupMock = jest.fn<DiceCup>(() => ({
-      cast: (numberOfDice: number) => {
-        return returnedDice;
-      }
+      cast: jest.fn<number[]>(() => returnedDice)
     }));
+
+    diceCup = new DiceCupMock();
 
     const scoreanalyzer = new ScoreAnalyzer([
       aces, twos, threes, fours, fives, sixes,
@@ -31,7 +32,7 @@ describe('Game', () => {
       smallStraight, largeStraight, chance, yahtzee
     ]);
 
-    game = new Game(new DiceCupMock(), scoreanalyzer);
+    game = new Game(diceCup, scoreanalyzer);
   });
 
   describe('game management', () => {
@@ -94,6 +95,14 @@ describe('Game', () => {
         expect(() => game.cast()).toThrowError(Game.GameNotRunningError);
       });
 
+      it('casts the dice with 5 by default', () => {
+        game.player('Karsten');
+        game.start();
+        returnedDice = [1, 2, 3, 4, 5];
+        game.cast();
+        expect(diceCup.cast).toHaveBeenCalledWith(5);
+      });
+
       it('it returns possible scores', () => {
         game.player('Karsten');
         game.start();
@@ -113,6 +122,30 @@ describe('Game', () => {
             new Score(CHANCE, 15),
           ]
         });
+      });
+    });
+
+    describe('player casts selected dice again', () => {
+      it('it returns possible scores', () => {
+        game.player('Karsten');
+        game.start();
+
+        returnedDice = [1, 2, 3, 4, 5];
+        game.cast();
+        expect(diceCup.cast).toHaveBeenCalledWith(5);
+
+        returnedDice = [1, 2, 3, 2, 2];
+        expect(game.cast([4, 5])).toEqual({
+          dice: [1, 2, 3, 2, 2],
+          scores: [
+            new Score(ACES, 1),
+            new Score(TWOS, 6),
+            new Score(THREES, 3),
+            new Score(THREE_OF_A_KIND, 10),
+            new Score(CHANCE, 10),
+          ]
+        });
+        expect(diceCup.cast).toHaveBeenLastCalledWith(2);
       });
     });
   });
