@@ -1,4 +1,6 @@
 import Game from '../Game';
+import Score from '../Score';
+import { ACES, TWOS, THREES } from '../categories';
 
 describe('Game', () => {
   let game: Game;
@@ -59,6 +61,26 @@ describe('Game', () => {
 
       expect(game.currentPlayer).toBe(player1);
       expect(game.currentPlayer).not.toBe(player2);
+    });
+
+    describe('player casts dice', () => {
+      it('forbids to cast the dice before game has started', () => {
+        game.player('Karsten');
+        expect(() => game.cast()).toThrowError(Game.GameNotRunningError);
+      });
+
+      it('it returns possible scores', () => {
+        game.player('Karsten');
+        game.start();
+        expect(game.cast()).toEqual({
+          dice: [1, 2, 3],
+          scores: [
+            new Score(ACES, 1),
+            new Score(TWOS, 2),
+            new Score(THREES, 3),
+          ]
+        });
+      });
     });
   });
 });
