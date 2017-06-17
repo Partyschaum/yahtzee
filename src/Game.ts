@@ -7,6 +7,7 @@ class Game {
   private _players: Player[];
   private _running = false;
   private _currentPlayer: Player;
+  private numberOfCasts: number;
 
   public constructor(private diceCup: DiceCup, private scoreAnalyzer: ScoreAnalyzer) {
     this._players = [];
@@ -31,12 +32,16 @@ class Game {
 
     this._currentPlayer = this.players.shift() as Player;
     this._running = true;
-
+    this.numberOfCasts = 0;
   }
 
   public cast(dice: number[] = []): Game.Result {
     if (!this.running) {
       throw new Game.GameNotRunningError;
+    }
+
+    if (this.numberOfCasts === 3) {
+      throw new Game.DiceCastingExceededError();
     }
 
     let numberOfDice = dice.length;
@@ -46,6 +51,8 @@ class Game {
 
     const diceCast = this.diceCup.cast(numberOfDice);
     const scores = this.scoreAnalyzer.scores(diceCast);
+
+    this.numberOfCasts++;
 
     return {
       dice: diceCast,
@@ -85,6 +92,13 @@ namespace Game {
     constructor() {
       super();
       Object.setPrototypeOf(this, GameNotRunningError.prototype);
+    }
+  }
+
+  export class DiceCastingExceededError extends Error {
+    constructor() {
+      super();
+      Object.setPrototypeOf(this, DiceCastingExceededError.prototype);
     }
   }
 

@@ -126,7 +126,7 @@ describe('Game', () => {
     });
 
     describe('player casts selected dice again', () => {
-      it('it returns possible scores', () => {
+      it('returns possible scores', () => {
         game.player('Karsten');
         game.start();
 
@@ -146,6 +146,17 @@ describe('Game', () => {
           ]
         });
         expect(diceCup.cast).toHaveBeenLastCalledWith(2);
+      });
+    });
+
+    describe('player casts dice more than three times', () => {
+      it('throws error', () => {
+        game.player('Karsten');
+        game.start();
+        game.cast();
+        game.cast();
+        game.cast();
+        expect(() => game.cast()).toThrowError(Game.DiceCastingExceededError);
       });
     });
   });
