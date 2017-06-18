@@ -21,10 +21,7 @@ class Game {
     if (this.running) {
       throw new Game.GameAlreadyRunningError;
     }
-    const player = { id: this.playerId, name };
-    this.playerId++;
-    this._players.push(player);
-    return player;
+    return this.newPlayer(name);
   }
 
   public start() {
@@ -74,6 +71,18 @@ class Game {
       return player.id === (this.currentPlayer.id + 1);
     });
     this._currentPlayer = nextPlayer.pop() as Game.Player;
+  }
+
+  private newPlayer(name: string): Game.Player {
+    this._players.filter((player) => {
+      if (player.name === name) {
+        throw new Game.PlayerNameAlreadyExistsError();
+      }
+    });
+    const player = { id: this.playerId, name };
+    this.playerId++;
+    this._players.push(player);
+    return player;
   }
 
   public get players(): Game.Player[] {
@@ -133,6 +142,13 @@ namespace Game {
     constructor() {
       super();
       Object.setPrototypeOf(this, NoPlayersAdded.prototype);
+    }
+  }
+
+  export class PlayerNameAlreadyExistsError extends Error {
+    constructor() {
+      super();
+      Object.setPrototypeOf(this, PlayerNameAlreadyExistsError.prototype);
     }
   }
 

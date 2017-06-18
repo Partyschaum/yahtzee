@@ -44,6 +44,11 @@ describe('Game', () => {
       expect(game.players).toContain(player2);
     });
 
+    it('forbids adding same player name twice', () => {
+      game.player('Hauke');
+      expect(() => game.player('Hauke')).toThrowError(Game.PlayerNameAlreadyExistsError);
+    });
+
     it('returns copy of player list', () => {
       game.player('Hauke');
       game.player('Katharina');
