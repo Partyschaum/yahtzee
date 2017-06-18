@@ -2,6 +2,7 @@ import DiceCup from '../DiceCup';
 import Game from '../Game';
 import Score from '../Score';
 import ScoreAnalyzer from '../ScoreAnalyzer';
+import Scorecard from '../Scorecard';
 
 import {
   aces, twos, threes, fours, fives, sixes,
@@ -196,6 +197,19 @@ describe('Game', () => {
 
         game.score(result.scores[1]);
         expect(game.scores).toBe(6);
+      });
+
+      it('forbids to add score used category', () => {
+        game.player('Horst');
+        game.player('Harald');
+        game.start();
+
+        returnedDice = [1, 2, 3, 2, 2];
+        const result = game.cast();
+
+        game.score(result.scores[1]);
+
+        expect(() => game.score(result.scores[1])).toThrow(Scorecard.CategoryAlreadyUsedError);
       });
     });
   });
