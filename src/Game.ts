@@ -10,11 +10,13 @@ class Game {
   private numberOfCasts: number;
   private scorecard: Scorecard;
   private playerId: number;
+  private lastDiceCast: Game.DiceCast;
 
   public constructor(private diceCup: DiceCup, private scoreAnalyzer: ScoreAnalyzer) {
     this._players = [];
     this.playerId = 1;
     this.scorecard = new Scorecard();
+    this.lastDiceCast = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 };
   }
 
   public player(name: string) {
@@ -54,9 +56,27 @@ class Game {
       numberOfDice = 5;
     }
 
-    const diceCast = this.diceCup.cast(numberOfDice);
-    const scores = this.scoreAnalyzer.scores(diceCast);
+    let diceRecastMap: Game.DiceCast = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 };
+    dice.forEach((pip) => {
+      diceRecastMap[pip]++;
+    });
 
+    if (dice.length > 0) {
+      for (let recastDice in diceRecastMap) {
+        if ((diceRecastMap[recastDice] !== 0 && this.lastDiceCast[recastDice] === 0)
+          || this.lastDiceCast[recastDice] < diceRecastMap[recastDice]) {
+          throw new Game.NonAvailableDiceError();
+        }
+      }
+    }
+
+    this.lastDiceCast = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 };
+    const diceCast = this.diceCup.cast(numberOfDice);
+    diceCast.forEach((pip) => {
+      this.lastDiceCast[pip]++;
+    });
+
+    const scores = this.scoreAnalyzer.scores(diceCast);
     this.numberOfCasts++;
 
     return {
@@ -116,6 +136,10 @@ namespace Game {
 
   export type Players = Player[];
 
+  export type DiceCast = {
+    [n: number]: number;
+  };
+
   export class GameAlreadyRunningError extends Error {
     constructor() {
       super();
@@ -156,6 +180,13 @@ namespace Game {
     constructor() {
       super();
       Object.setPrototypeOf(this, MinimumPlayerRequirementsError.prototype);
+    }
+  }
+
+  export class NonAvailableDiceError extends Error {
+    constructor() {
+      super();
+      Object.setPrototypeOf(this, NonAvailableDiceError.prototype);
     }
   }
 

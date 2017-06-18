@@ -166,6 +166,19 @@ describe('Game', () => {
         });
         expect(diceCup.cast).toHaveBeenLastCalledWith(2);
       });
+
+      describe('player casts non existent dice', () => {
+        it('throws error', () => {
+          game.player('Lydia');
+          game.player('Karsten');
+          game.start();
+
+          returnedDice = [1, 2, 3, 4, 5];
+          game.cast();
+          expect(() => game.cast([6])).toThrowError(Game.NonAvailableDiceError);
+          expect(() => game.cast([2, 2])).toThrowError(Game.NonAvailableDiceError);
+        });
+      });
     });
 
     describe('player casts dice more than three times', () => {
