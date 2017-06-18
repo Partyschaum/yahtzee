@@ -1,18 +1,19 @@
 import DiceCup from './DiceCup';
-import Player from './Player';
 import Score from './Score';
 import ScoreAnalyzer from './ScoreAnalyzer';
 import Scorecard from './Scorecard';
 
 class Game {
-  private _players: Player[];
+  private _players: Game.Players;
   private _running = false;
-  private _currentPlayer: Player;
+  private _currentPlayer: Game.Player;
   private numberOfCasts: number;
   private scorecard: Scorecard;
+  private playerId: number;
 
   public constructor(private diceCup: DiceCup, private scoreAnalyzer: ScoreAnalyzer) {
     this._players = [];
+    this.playerId = 1;
     this.scorecard = new Scorecard();
   }
 
@@ -20,7 +21,8 @@ class Game {
     if (this.running) {
       throw new Game.GameAlreadyRunningError;
     }
-    const player = new Player(name, 123);
+    const player = { id: this.playerId, name };
+    this.playerId++;
     this._players.push(player);
     return player;
   }
@@ -36,7 +38,7 @@ class Game {
       throw new Game.MinimumPlayerRequirementsError();
     }
 
-    this._currentPlayer = this.players.shift() as Player;
+    this._currentPlayer = this.players.shift() as Game.Player;
     this._running = true;
     this.numberOfCasts = 0;
   }
@@ -68,9 +70,13 @@ class Game {
 
   public score(score: Score) {
     this.scorecard.add(score);
+    const nextPlayer = this._players.filter((player) => {
+      return player.id === (this.currentPlayer.id + 1);
+    });
+    this._currentPlayer = nextPlayer.pop() as Game.Player;
   }
 
-  public get players(): Player[] {
+  public get players(): Game.Player[] {
     return [...this._players];
   }
 
@@ -78,7 +84,7 @@ class Game {
     return this._running;
   }
 
-  public get currentPlayer(): Player {
+  public get currentPlayer(): Game.Player {
     return this._currentPlayer;
   }
 
@@ -90,9 +96,16 @@ class Game {
 namespace Game {
 
   export type Result = {
-    dice: number[],
-    scores: Score[]
+    dice: number[];
+    scores: Score[];
   };
+
+  export type Player = {
+    id: number;
+    name: string;
+  };
+
+  export type Players = Player[];
 
   export class GameAlreadyRunningError extends Error {
     constructor() {

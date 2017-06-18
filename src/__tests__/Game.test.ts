@@ -211,6 +211,19 @@ describe('Game', () => {
 
         expect(() => game.score(result.scores[1])).toThrow(Scorecard.CategoryAlreadyUsedError);
       });
+
+      it('changes to next player', () => {
+        const player1 = game.player('Horst');
+        const player2 = game.player('Harald');
+        game.start();
+
+        expect(game.currentPlayer).toBe(player1);
+
+        returnedDice = [1, 2, 3, 2, 2];
+        game.score(game.cast().scores[1]);
+
+        expect(game.currentPlayer).toBe(player2);
+      });
     });
   });
 });
