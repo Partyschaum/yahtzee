@@ -2,15 +2,18 @@ import DiceCup from './DiceCup';
 import Player from './Player';
 import Score from './Score';
 import ScoreAnalyzer from './ScoreAnalyzer';
+import Scorecard from './Scorecard';
 
 class Game {
   private _players: Player[];
   private _running = false;
   private _currentPlayer: Player;
   private numberOfCasts: number;
+  private scorecard: Scorecard;
 
   public constructor(private diceCup: DiceCup, private scoreAnalyzer: ScoreAnalyzer) {
     this._players = [];
+    this.scorecard = new Scorecard();
   }
 
   public player(name: string) {
@@ -63,6 +66,10 @@ class Game {
     };
   }
 
+  public score(score: Score) {
+    this.scorecard.add(score);
+  }
+
   public get players(): Player[] {
     return [...this._players];
   }
@@ -73,6 +80,10 @@ class Game {
 
   public get currentPlayer(): Player {
     return this._currentPlayer;
+  }
+
+  public get scores(): number {
+    return this.scorecard.score;
   }
 }
 

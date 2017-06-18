@@ -173,5 +173,30 @@ describe('Game', () => {
         expect(() => game.cast()).toThrowError(Game.DiceCastingExceededError);
       });
     });
+
+    describe('player selects score', () => {
+      it('add score to scorecard', () => {
+        game.player('Horst');
+        game.player('Harald');
+        game.start();
+
+        returnedDice = [1, 2, 3, 2, 2];
+        const result = game.cast();
+
+        // {
+        //   dice: [1, 2, 3, 2, 2],
+        //   scores: [
+        //     new Score(ACES, 1),
+        //     new Score(TWOS, 6),
+        //     new Score(THREES, 3),
+        //     new Score(THREE_OF_A_KIND, 10),
+        //     new Score(CHANCE, 10),
+        //   ]
+        // }
+
+        game.score(result.scores[1]);
+        expect(game.scores).toBe(6);
+      });
+    });
   });
 });
