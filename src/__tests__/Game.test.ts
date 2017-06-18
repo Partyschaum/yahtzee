@@ -60,8 +60,16 @@ describe('Game', () => {
     describe('players added', () => {
       it('starts the game', () => {
         game.player('Hauke');
+        game.player('Klaus');
         game.start();
         expect(game.running).toBe(true);
+      });
+    });
+
+    describe('start the game', () => {
+      it('needs at least two players', () => {
+        game.player('Otto');
+        expect(() => game.start()).toThrowError(Game.MinimumPlayerRequirementsError);
       });
     });
   });
@@ -69,12 +77,14 @@ describe('Game', () => {
   describe('game is running', () => {
     it('forbids adding new players', () => {
       game.player('Hauke');
+      game.player('Klaas');
       game.start();
       expect(() => game.player('Karl')).toThrowError(Game.GameAlreadyRunningError);
     });
 
     it('forbids starting game', () => {
       game.player('Hauke');
+      game.player('Philip');
       game.start();
       expect(() => game.start()).toThrowError(Game.GameAlreadyRunningError);
     });
@@ -97,6 +107,7 @@ describe('Game', () => {
 
       it('casts the dice with 5 by default', () => {
         game.player('Karsten');
+        game.player('Sven');
         game.start();
         returnedDice = [1, 2, 3, 4, 5];
         game.cast();
@@ -105,6 +116,7 @@ describe('Game', () => {
 
       it('it returns possible scores', () => {
         game.player('Karsten');
+        game.player('Ole');
         game.start();
 
         returnedDice = [1, 2, 3, 4, 5];
@@ -127,6 +139,7 @@ describe('Game', () => {
 
     describe('player casts selected dice again', () => {
       it('returns possible scores', () => {
+        game.player('Lydia');
         game.player('Karsten');
         game.start();
 
@@ -151,6 +164,7 @@ describe('Game', () => {
 
     describe('player casts dice more than three times', () => {
       it('throws error', () => {
+        game.player('Horst');
         game.player('Karsten');
         game.start();
         game.cast();

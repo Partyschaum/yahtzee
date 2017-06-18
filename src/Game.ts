@@ -29,6 +29,9 @@ class Game {
     if (this.players.length === 0) {
       throw new Game.NoPlayersAdded();
     }
+    if (this.players.length < 2) {
+      throw new Game.MinimumPlayerRequirementsError();
+    }
 
     this._currentPlayer = this.players.shift() as Player;
     this._running = true;
@@ -106,6 +109,13 @@ namespace Game {
     constructor() {
       super();
       Object.setPrototypeOf(this, NoPlayersAdded.prototype);
+    }
+  }
+
+  export class MinimumPlayerRequirementsError extends Error {
+    constructor() {
+      super();
+      Object.setPrototypeOf(this, MinimumPlayerRequirementsError.prototype);
     }
   }
 
