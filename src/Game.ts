@@ -19,7 +19,7 @@ class Game {
     this.lastDiceCast = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 };
   }
 
-  public player(name: string) {
+  public player(name: string): Game.Player {
     if (this.running) {
       throw new Game.GameAlreadyRunningError;
     }
