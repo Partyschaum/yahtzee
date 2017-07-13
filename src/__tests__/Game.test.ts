@@ -215,6 +215,8 @@ describe('Game', () => {
         // }
 
         game.score(result.scores[1]);
+        game.score(result.scores[1]);
+
         expect(game.scores).toBe(6);
       });
 
@@ -226,6 +228,7 @@ describe('Game', () => {
         returnedDice = [1, 2, 3, 2, 2];
         const result = game.cast();
 
+        game.score(result.scores[1]);
         game.score(result.scores[1]);
 
         expect(() => game.score(result.scores[1])).toThrow(Scorecard.CategoryAlreadyUsedError);
@@ -240,6 +243,7 @@ describe('Game', () => {
         const result = game.cast();
 
         game.score(result.scores[1]);
+        game.score(result.scores[1]);
 
         expect(game.usedCategories).toEqual([TWOS]);
       });
@@ -252,6 +256,7 @@ describe('Game', () => {
         returnedDice = [1, 2, 3, 2, 2];
         const result = game.cast();
 
+        game.score(result.scores[1]);
         game.score(result.scores[1]);
 
         expect(game.unusedCategories).toEqual([
@@ -272,6 +277,25 @@ describe('Game', () => {
         game.score(game.cast().scores[1]);
 
         expect(game.currentPlayer).toBe(player2);
+      });
+    });
+
+    describe('scoring', () => {
+      it('manages scores for each player', () => {
+        game.player('Horst');
+        game.player('Harald');
+        game.start();
+
+        returnedDice = [1, 2, 3, 2, 2];
+        game.score(game.cast().scores[1]);
+
+        expect(game.scores).toBe(0);
+
+        returnedDice = [6, 6, 6, 6, 6];
+        game.score(game.cast().scores[0]);
+        game.score(game.cast().scores[0]);
+
+        expect(game.scores).toBe(30);
       });
     });
   });

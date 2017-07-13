@@ -16,14 +16,14 @@ class Game {
   private _running = false;
   private _currentPlayer: Game.Player;
   private numberOfCasts: number;
-  private scorecard: Scorecard;
+  private scorecard: Scorecard[];
   private playerId: number;
   private lastDiceCast: Game.DiceCast;
 
   public constructor(private diceCup: DiceCup, private scoreAnalyzer: ScoreAnalyzer) {
     this._players = [];
     this.playerId = 1;
-    this.scorecard = new Scorecard();
+    this.scorecard = [];
     this.lastDiceCast = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 };
   }
 
@@ -94,10 +94,17 @@ class Game {
   }
 
   public score(score: Score) {
-    this.scorecard.add(score);
+    this.scorecard[this.currentPlayer.id].add(score);
+
+    let nextPlayerId = this.currentPlayer.id + 1;
+    if (nextPlayerId > this._players.length) {
+      nextPlayerId = 1;
+    }
+
     const nextPlayer = this._players.filter((player) => {
-      return player.id === (this.currentPlayer.id + 1);
+      return player.id === nextPlayerId;
     });
+
     this._currentPlayer = nextPlayer.pop() as Game.Player;
   }
 
@@ -110,6 +117,7 @@ class Game {
     const player = { id: this.playerId, name };
     this.playerId++;
     this._players.push(player);
+    this.scorecard[player.id] = new Scorecard();
     return player;
   }
 
@@ -126,11 +134,11 @@ class Game {
   }
 
   public get scores(): number {
-    return this.scorecard.score;
+    return this.scorecard[this.currentPlayer.id].score;
   }
 
   public get usedCategories(): Category[] {
-    return this.scorecard.categories.map((score) => score.category);
+    return this.scorecard[this.currentPlayer.id].categories.map((score) => score.category);
   }
 
   public get unusedCategories(): Category[] {
