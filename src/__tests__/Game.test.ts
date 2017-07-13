@@ -195,7 +195,7 @@ describe('Game', () => {
     });
 
     describe('player selects score', () => {
-      it('add score to scorecard', () => {
+      it('adds score to scorecard', () => {
         game.player('Horst');
         game.player('Harald');
         game.start();
