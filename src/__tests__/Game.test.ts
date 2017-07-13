@@ -217,7 +217,7 @@ describe('Game', () => {
         expect(game.scores).toBe(6);
       });
 
-      it('forbids to add score used category', () => {
+      it('forbids to add score to used category', () => {
         game.player('Horst');
         game.player('Harald');
         game.start();
