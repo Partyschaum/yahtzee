@@ -3,6 +3,14 @@ import Score from './Score';
 import ScoreAnalyzer from './ScoreAnalyzer';
 import Scorecard from './Scorecard';
 
+import { Category } from './categories';
+
+import {
+  ACES, TWOS, THREES, FOURS, FIVES, SIXES,
+  THREE_OF_A_KIND, FOUR_OF_A_KIND, FULL_HOUSE,
+  SMALL_STRAIGHT, LARGE_STRAIGHT, YAHTZEE, CHANCE
+} from './categories';
+
 class Game {
   private _players: Game.Players;
   private _running = false;
@@ -119,6 +127,24 @@ class Game {
 
   public get scores(): number {
     return this.scorecard.score;
+  }
+
+  public get usedCategories(): Category[] {
+    return this.scorecard.categories.map((score) => score.category);
+  }
+
+  public get unusedCategories(): Category[] {
+    const unusedCategories: Category[] = [
+      ACES, TWOS, THREES, FOURS, FIVES, SIXES,
+      THREE_OF_A_KIND, FOUR_OF_A_KIND, FULL_HOUSE,
+      SMALL_STRAIGHT, LARGE_STRAIGHT, YAHTZEE, CHANCE
+    ];
+
+    this.usedCategories.forEach((category) => unusedCategories.splice(
+      unusedCategories.indexOf(category), 1
+    ));
+
+    return unusedCategories;
   }
 }
 

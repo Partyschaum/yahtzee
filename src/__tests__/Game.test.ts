@@ -11,8 +11,9 @@ import {
 } from '../categories';
 
 import {
-  ACES, TWOS, THREES, FOURS, FIVES, THREE_OF_A_KIND,
-  SMALL_STRAIGHT, LARGE_STRAIGHT, CHANCE
+  ACES, TWOS, THREES, FOURS, FIVES, SIXES,
+  THREE_OF_A_KIND, FOUR_OF_A_KIND, FULL_HOUSE,
+  SMALL_STRAIGHT, LARGE_STRAIGHT, YAHTZEE, CHANCE
 } from '../categories';
 
 describe('Game', () => {
@@ -228,6 +229,36 @@ describe('Game', () => {
         game.score(result.scores[1]);
 
         expect(() => game.score(result.scores[1])).toThrow(Scorecard.CategoryAlreadyUsedError);
+      });
+
+      it('returns used categories', () => {
+        game.player('Horst');
+        game.player('Harald');
+        game.start();
+
+        returnedDice = [1, 2, 3, 2, 2];
+        const result = game.cast();
+
+        game.score(result.scores[1]);
+
+        expect(game.usedCategories).toEqual([TWOS]);
+      });
+
+      it('returns unused categories', () => {
+        game.player('Horst');
+        game.player('Harald');
+        game.start();
+
+        returnedDice = [1, 2, 3, 2, 2];
+        const result = game.cast();
+
+        game.score(result.scores[1]);
+
+        expect(game.unusedCategories).toEqual([
+          ACES, THREES, FOURS, FIVES, SIXES,
+          THREE_OF_A_KIND, FOUR_OF_A_KIND, FULL_HOUSE,
+          SMALL_STRAIGHT, LARGE_STRAIGHT, YAHTZEE, CHANCE
+        ]);
       });
 
       it('changes to next player', () => {
